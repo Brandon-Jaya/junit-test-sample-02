@@ -58,6 +58,10 @@ public class CustomerService {
         customerRepository.delete(findExistingCustomer(customerId));
     }
 
+    public boolean isVipCustomer(Long customerId) {
+        return false;
+    }
+
     private Customer findExistingCustomer(long customerId) {
         return customerRepository.findById(customerId).orElseThrow(() -> {
             log.error("customer with id not found {}", customerId);
@@ -68,5 +72,6 @@ public class CustomerService {
     private CustomerResponse customerResponse(Customer customer) {
         return new CustomerResponse(customer.getId(), customer.getName(), customer.getPhone());
     }
+    
     
 }
