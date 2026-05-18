@@ -35,5 +35,23 @@ class DiscountServiceTest {
         verify(customerService, never()).isVipCustomer(1L);
     }
 
+    @Test
+    void calculateDiscount_shouldApplyVipDiscount_whenTotalIsGreaterThanFiveHundredAndCustomerIsVip() {
+        when(customerService.isVipCustomer(2L)).thenReturn(true);
+
+        double discount = discountService.calculateDiscount(600.0, 10, 2L);
+
+        assertEquals(60.0, discount, 0.0001);
+        verify(customerService).isVipCustomer(2L);
+    }
+
+    @Test
+    void calculateDiscount_shouldReturnZero_whenQuantityIsExactlyTenAndTotalIsExactlyFiveHundred() {
+        double discount = discountService.calculateDiscount(500.0, 10, 3L);
+
+        assertEquals(0.0, discount, 0.0001);
+        verify(customerService, never()).isVipCustomer(3L);
+    }
+
     
 }
