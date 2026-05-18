@@ -53,5 +53,16 @@ class DiscountServiceTest {
         verify(customerService, never()).isVipCustomer(3L);
     }
 
+    @Test
+    void calculateDiscount_shouldThrowIllegalArgumentException_whenInputsAreInvalid() {
+        assertThrows(IllegalArgumentException.class,
+                () -> discountService.calculateDiscount(-1.0, 1, 1L));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> discountService.calculateDiscount(10.0, 0, 1L));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> discountService.calculateDiscount(10.0, 1, null));
+    }
     
 }
